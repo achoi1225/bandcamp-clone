@@ -1,6 +1,6 @@
 //external requires
 const express = require("express");
-// const cors = require('cors');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const morgan = require("morgan");
 const { ValidationError } = require("sequelize");
@@ -25,7 +25,7 @@ const app = express();
 // app.set("view engine", "pug");
 
 //external use statements
-// app.use(cors({ origin: true }));
+app.use(cors({ origin: true }));
 app.use(morgan("dev"));
 app.use(cookieParser(cookieConfig));
 app.use(express.json());

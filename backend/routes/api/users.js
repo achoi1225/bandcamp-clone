@@ -34,36 +34,31 @@ const sharedAuthValidations = [
   router.post("/",
     signupValidations,
     sharedAuthValidations,
-    check("confirmPassword")
-      .exists({ checkFalsy: true })
-      .withMessage("Please confirm your password")
-      .custom((value, { req }) => value === req.body.password)
-      .withMessage("Confirm Password field does not match password."),
     handleValidationErrors,
     asyncHandler(async(req, res) => {
-      console.log('HERE!!!');
       const {
         userName,
         email,
         password,
+        artist
       } = req.body;
-
+      
+      console.log("HERE!!!!");
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create(
       {
        userName,
        email,
-       hashedPassword
+       hashedPassword,
+       artist
       }
     );
 
     const token = await getUserToken(user);
     res.cookie("accessToken", token, { httpOnly: true });
 
-    // console.log('GOT TOKEN!!!');
-
     res.status(201).json({
-      user: { id: user.id },
+      user: { id: user.id, userName: user.userName },
       token
     });
   })
@@ -72,33 +67,33 @@ const sharedAuthValidations = [
 
 
 // sign in
-// router.post("/token", sharedAuthValidations,
-//   asyncHandler(async(req, res, next) => {
-//     const { email, password } = req.body;
-//     const user = await User.findOne(
-//       {
-//         where: { email }
-//       }
-//     );
+router.post("/token", sharedAuthValidations,
+  asyncHandler(async(req, res, next) => {
+    const { email, password } = req.body;
+    const user = await User.findOne(
+      {
+        where: { email }
+      }
+    );
 
-//     if (!user || !user.validatePassword(password)) {
-//       const error = new Error("Invalid credentials");
-//       error.status = 401;
-//       error.title = "Invalid credentials";
-//       error.errors = ["Unable to authenticate provided information. Please check user name and/or password."];
-//       return next(error);
-//     }
+    if (!user || !user.validatePassword(password)) {
+      const error = new Error("Invalid credentials");
+      error.status = 401;
+      error.title = "Invalid credentials";
+      error.errors = ["Unable to authenticate provided information. Please check user name and/or password."];
+      return next(error);
+    }
 
-//     const token = getUserToken(user);
-//     res.cookie("accessToken", token, { httpOnly: true });
-//     res.json({ token, user: { id: user.id, userName: user.userName }});
-//   })
-// );
+    const token = getUserToken(user);
+    res.cookie("accessToken", token, { httpOnly: true });
+    res.json({ token, user: { id: user.id, userName: user.userName }});
+  })
+);
 
-// router.delete("/token", asyncHandler(async(req, res, next) => {
-//   res.clearCookie("accessToken");
-//   res.status(200).end();
-// }))
+router.delete("/token", asyncHandler(async(req, res, next) => {
+  res.clearCookie("accessToken");
+  res.status(200).end();
+}))
 
 
 
