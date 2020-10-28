@@ -1,10 +1,14 @@
 import React from 'react';
 
-const SignupButton = () => {
+const SignupButton = ({ showSignupForm }) => {
+
+    const handleClick = (e) => {
+        showSignupForm();
+    }
 
     return (
         <div>
-            <button>sign up</button>
+            <button onClick={handleClick}>sign up</button>
         </div>
     )
 }

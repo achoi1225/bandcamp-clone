@@ -56,7 +56,7 @@ export const signup = ({email, password, userName, artist}) => async (dispatch) 
 
 
 // LOGIN ============================================================================
-export const login = (email, password) => async (dispatch) => {
+export const login = ({email, password}) => async (dispatch) => {
 
     try {
         const response = await fetch(`${baseUrl}/users/token`, {
@@ -77,6 +77,7 @@ export const login = (email, password) => async (dispatch) => {
 
         dispatch(setToken(token));
 
+        console.log("LOG IN SUCCESSFUL!!!!");
     } catch(err) {
         console.log(err);
         // errorNotifications(err);

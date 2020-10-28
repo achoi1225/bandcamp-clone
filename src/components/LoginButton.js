@@ -1,10 +1,14 @@
 import React from 'react';
 
-const LoginButton = () => {
+const LoginButton = ({showLoginForm}) => {
+
+    const handleClick = () => {
+        showLoginForm();
+    }
 
     return (
         <div>
-            <button>log in</button>
+            <button onClick={handleClick}>log in</button>
         </div>
     )
 }
