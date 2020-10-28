@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
-import { getToken } from '../fetches/authentication';
+import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { signup } from "../store/actions/authentication";
+import { getToken } from "../fetches/authentication";
 
 const SignupForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [userName, setUserName] = useState("");
+    // const [formVisible, setFormVisible] = useState("");
+    const dispatch = useDispatch();
  
     // for testing
     const artist = true;
@@ -25,9 +30,10 @@ const SignupForm = () => {
         }
 
         const success = await getToken(payload);
+        // dispatch(signup(payload));
 
         if(success) {
-            console.log('SUCCESS!!!');
+            console.log('NEW USER REGISTRATION SUCCESSFUL!!!');
         }
     }
 
