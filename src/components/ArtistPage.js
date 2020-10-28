@@ -2,6 +2,8 @@ import React from 'react';
 
 const ArtistPage = () => {
 
+    const artistPhotoExists = false;
+    const artistImgUrl = 'https://i.imgur.com/ZpkMNwZ.jpg';
     const artistName = "The Pojos";
 
     return (
@@ -13,8 +15,9 @@ const ArtistPage = () => {
                 <div className="top-content__holder">
 
                     <div className="discography">
+                        <div className="discography__intro">Start off by adding album to your discography!</div>
                         <div className="discography__header-holder">
-                            <h3>DISCOGRAPHY</h3>
+                            <h3>DISCOGRAPHY</h3> <button className="discography__add-btn">+ add</button>
                         </div>
                         <div className="albums__holder">
                             <div className="album__placeholder"></div>
@@ -29,13 +32,14 @@ const ArtistPage = () => {
                     </div>
 
                     <div className="artist-info__holder">
-                        <div className="artist-info__photo-placeholder">
-                            <button>add artist photo</button>
-                        </div>
+                        { artistPhotoExists ? 
+                            (<img src={artistImgUrl} className="artist-info__photo" />) :
+                            (<button className="artist-info__photo-placeholder">add artist photo</button>)
+                        }
                         <div className="artist-info__name">
                             {artistName}
                         </div>
-
+                            
                         <button className="artist-info__add-bio-btn">add artist bio</button>
                     </div>
 
