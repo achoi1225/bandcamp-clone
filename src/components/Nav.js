@@ -3,17 +3,23 @@ import { NavLink, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import SignupButton from './SignupButton';
 import LoginButton from './LoginButton';
-import SignupForm from './SignupForm';
+import FanSignupForm from './FanSignupForm';
 import LoginForm from './LoginForm';
-import { showSignupForm, hideSignupForm } from '../store/actions/ui-signup-form';
+import RoleForm from './RoleForm';
+import { showFanSignupForm, hideFanSignupForm } from '../store/actions/ui-fan-signup-form';
 import { showLoginForm, hideLoginForm } from '../store/actions/ui-login-form';
-
+import { showRoleForm, hideRoleForm } from '../store/actions/ui-role-form';
 
 const Nav = () => {
     const [searchValue, setSearchValue] = useState('');
-    const signupFormVisible = useSelector(state => state.uiSignupForm.formVisible);
+    const [role, setRole] = useState('');
+    const fanSignupFormVisible = useSelector(state => state.uiFanSignupForm.formVisible);
     const loginFormVisible = useSelector(state => state.uiLoginForm.formVisible);
+    const roleFormVisible = useSelector(state => state.uiRoleForm.formVisible);
     const dispatch = useDispatch();
+
+    console.log("ROLE IS:", role);
+    console.log("IS FAN SIGN UP FORM VISIBLE?:", fanSignupFormVisible);
 
     const updateProperty = (e) => {
         console.log("SEARCH BAR!!!!", e.target.value);
@@ -35,13 +41,23 @@ const Nav = () => {
                 </form>
             </div>
             <SignupButton 
-                showSignupForm={ () => dispatch(showSignupForm()) }
+                showRoleForm={ () => dispatch(showRoleForm()) }
             />
             <LoginButton 
                 showLoginForm={ () => dispatch(showLoginForm()) }
             />
-            { signupFormVisible ? 
-                ( <SignupForm hideSignupForm={ () => dispatch(hideSignupForm()) } /> ) : null }
+            { roleFormVisible ? 
+                ( 
+                    <RoleForm 
+                        hideRoleForm={ () => dispatch(hideRoleForm()) } 
+                        showFanSignupForm={ () => dispatch(showFanSignupForm()) } 
+                        setRole = {setRole} 
+
+                    /> 
+                ) : null 
+            }
+            { fanSignupFormVisible ? 
+                ( <FanSignupForm hideFanSignupForm={ () => dispatch(hideFanSignupForm()) } /> ) : null }
             { loginFormVisible ? 
                 ( <LoginForm hideLoginForm={ () => dispatch(hideLoginForm()) } /> ) : null }  
            

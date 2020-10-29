@@ -1,9 +1,9 @@
 import React from 'react';
 
-const SignupButton = ({ showSignupForm }) => {
+const SignupButton = ({ showRoleForm }) => {
 
     const handleClick = (e) => {
-        showSignupForm();
+        showRoleForm();
     }
 
     return (

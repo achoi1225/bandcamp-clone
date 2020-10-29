@@ -1,16 +1,20 @@
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import thunk from 'redux-thunk';
 import authentication from './reducers/authentication';
-import uiSignupForm from './reducers/ui-signup-form';
+import uiRoleForm from './reducers/ui-role-form';
+import uiFanSignupForm from './reducers/ui-fan-signup-form';
 import uiLoginForm from './reducers/ui-login-form';
+import albums from './reducers/albums';
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const reducer = combineReducers({
     authentication,
-    uiSignupForm,
+    uiRoleForm,
+    uiFanSignupForm,
     uiLoginForm,
+    albums
 });
 
 const configureStore = (initialState) => {
