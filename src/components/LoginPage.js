@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector, } from "react-redux";
-import vinyl from '../images/vinyl.jpeg';
 import tent from '../images/tent.png';
 import SignupButton from './SignupButton';
 import LoginButton from './LoginButton';
