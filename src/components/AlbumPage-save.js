@@ -7,25 +7,21 @@ import {getOneAlbum} from '../store/actions/album';
 
 const AlbumPage = (props) => {
     const current = useSelector((state) => state.album.current)
+    // const tracks = useSelector((state) => state.album.current.Tracks)
+    // const artist = useSelector((state) => state.album.current.album.User)
+    const artistPhotoExists = false;
 
     const dispatch = useDispatch();
     const { id } = useParams();
     const albumId = Number.parseInt(id);
-
-    useEffect(() => {
-        dispatch(getOneAlbum(albumId));
-        // (async () => dispatch(getOneAlbum(albumId)))();
-    }, [albumId])
-    
-    // console.log("CURRENT!!!!", current);
-    
-    if(!current) {
-        return null;
-    }
     
     const album = current.album;
     const tracks = current.album.Tracks;
     const artist = current.album.User;
+    useEffect(() => {
+        dispatch(getOneAlbum(albumId));
+    }, [albumId, dispatch])
+
 
     return (
         <>

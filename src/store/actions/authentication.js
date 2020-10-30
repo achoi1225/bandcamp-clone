@@ -67,11 +67,13 @@ export const FanSignup = ({email, password, userName, artist, bio, imgUrl}) => a
 // ARTIST SIGNUP ============================================================================
 export const ArtistSignup = ({email, password, userName, artist, artistName, bio, genre, imgUrl}) => async (dispatch) => {
 
+    const body = {email, password, userName, artist, artistName, bio, genre, imgUrl}
+
     try{
         const response = await fetch(`${baseUrl}/artists`, {
             method: "POST",
             headers: { "Content-type": "application/json" },
-            body: JSON.stringify({ email, password, userName, artist, artistName, bio, genre, imgUrl })
+            body: JSON.stringify(body)
         });
     
         if(!response.ok) {

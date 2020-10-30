@@ -1,11 +1,11 @@
-import {LOAD} from "../actions/albums";
+import {SET_CURRENT} from "../actions/album";
 
 export default function reducer(state = {}, action) {
   switch (action.type) {
-    case LOAD: {
+    case SET_CURRENT: {
       return {
         ...state,
-        list: action.list,
+        current: action.current,
       };
     }
 

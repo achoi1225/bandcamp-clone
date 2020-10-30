@@ -81,9 +81,11 @@
    width: 200px;
 }
 
-.album-page__right-content .artist-photo-holder {
-    width: 130px;
+.album-page__right-content .artist-photo {
+    object-fit: cover;
+    width: 120px;
     height: 130px;
+    margin-bottom: 6px;
     background-color: #F3F3F3;
 }
 

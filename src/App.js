@@ -32,9 +32,9 @@ const App = () => {
     <>
       <BrowserRouter>
         <Switch>
-        <Route path="/login" component={LoginPage} />
+          <Route path="/login" component={LoginPage} />
           <PrivateRoute 
-            path="/albums/:albumId"
+            path="/albums/:id"
             exact={true}
             needLogin={needLogin}
             component={AlbumPage}
