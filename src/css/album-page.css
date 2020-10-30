@@ -7,7 +7,7 @@
 }
 
 .album-page {
-    width: 1020px;
+    width: 1000px;
     margin: 0 auto;
     display:flex;
     flex-direction: column;
@@ -24,7 +24,7 @@
 
 .album-page__header-holder {
     width: 400px;
-    border-bottom: 1px solid gray;
+    /* border-bottom: 1px solid gray; */
 }
 
 .album-page__header {
@@ -34,70 +34,110 @@
 .album-page__content-holder {
     display:flex;
     flex-direction: row;
-    background-color: aqua;
+    justify-content: space-between;
 }
 
 .album-page__left-content {
     width: 350px;
-    background-color: red;
     display: flex;
     flex-direction: column;
+}
+
+.album-page__left-content .artist-name-holder{
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 10px;
 }
 
 .album-page__left-content .album-header {
-    background-color: #3187F5;
     height: 150px;
 }
 
-.album-page__left-content .audio-player {
-    background-color: mediumaquamarine;
-    height: 150px;
+.album-page__left-content .audio-player-holder {
+    margin-bottom: 15px;
 }
 
 .album-page__left-content .track-holder {
+    height: 30px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.album-page__left-content .track {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-weight: bold;
+}
+
+.album-page__left-content .track:hover {
+    text-decoration: underline;
+}
+
+/* .album-page__left-content .track-holder {
     background-color: tomato;
     height: 100px;
-}
+} */
 
 .album-page__middle-content {
-    width: 400px;
-    background-color: azure;
+    width: 360px;
     display: flex;
     flex-direction: column;
+    /* flex-grow: 1; */
+    /* padding-left: 55px; */
+    padding-top: 25px;
 }
 
-.album-page__middle-content .album-cover {
+.album-page__middle-content .album-cover-holder {
     width: 360px;
     height: 360px;
-    background-color: gold;
+    /* margin: 0 auto; */
 }
 
+.album-cover {
+    object-fit: cover;
+    width: 360px;
+    height: 360px;
+}
 .album-page__middle-content .description {
     height: 300px;
-    background-color: gold;
+    padding: 15px 0;
+    font-weight: 500;
+    font-size: 14px;
+    /* margin: 0 auto; */
 }
 
 .album-page__right-content {
-   width: 200px;
+   width: 120px;
+   display: flex;
+   flex-direction: column;
+   padding-top: 25px;
 }
+
 
 .album-page__right-content .artist-photo {
     object-fit: cover;
     width: 120px;
     height: 130px;
-    margin-bottom: 6px;
-    background-color: #F3F3F3;
+    margin-bottom: 4px;
+    background-color: black;
+}
+
+.album-page__right-content .artist-name {
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .album-page__right-content .follow-btn {
-    width: 140px;
+    width: 120px;
     height: 30px;
-    background-color: #41A0C3;
+    margin: 10px 0 10px 0;
 }
 
 .album-page__right-content .bio{
     height: 300px;
-    background-color: bisque;
+    font-size: 13px;
+    font-weight: 500;
 }
 
 
