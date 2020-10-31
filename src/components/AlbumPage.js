@@ -5,17 +5,20 @@ import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import '../css/album-page.css';
 import Nav from './Nav';
-// import {getAlbums} from '../store/actions/albums';
+import { USER_ID } from '../store/actions/authentication';
 import {getOneAlbum, setCurrent} from '../store/actions/album';
 
 const AlbumPage = (props) => {
     const [currentTrack, setCurrentTrack] = useState('');
-    const current = useSelector((state) => state.album.current)
+    // const userData = useSelector((state) => state.user.data);
+    const current = useSelector((state) => state.album.current);
+    const userId = localStorage.getItem(USER_ID);
 
     const dispatch = useDispatch();
     const { id } = useParams();
     const albumId = Number.parseInt(id);
 
+    // console.log("INSIDE ALBUM PAGE", userData);
     useEffect(() => {
         dispatch(getOneAlbum(albumId));
         // (async () => dispatch(getOneAlbum(albumId)))();

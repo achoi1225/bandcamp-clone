@@ -4,7 +4,6 @@ import { baseUrl } from '../../config';
 export const TOKEN_KEY = "songcamp/authentication/TOKEN";
 export const USER_ID = "songcamp/authentication/USER_ID";
 export const USER_NAME = "songcamp/authentication/USER_NAME";
-export const ARTIST_NAME = "songcamp/authentication/ARTIST_NAME";
 export const IS_ARTIST = "songcamp/authentication/IS_ARTIST";
 export const SET_TOKEN = "songcamp/authentication/SET_TOKEN";
 export const REMOVE_TOKEN = "songcamp/authentication/REMOVE_TOKEN";
@@ -43,15 +42,15 @@ export const FanSignup = ({email, password, userName, artist, bio, imgUrl}) => a
             throw response;
         }
     
-        const { token, user: { id, userName, artistName, artist } } = await response.json();
+        const { token, user: { id, userName } } = await response.json();
         
         console.log('sign up successful!!!!');
 
         window.localStorage.setItem(TOKEN_KEY, token);
         window.localStorage.setItem(USER_ID, id);
         window.localStorage.setItem(USER_NAME, userName);
-        window.localStorage.setItem(ARTIST_NAME, artistName);
         window.localStorage.setItem(IS_ARTIST, artist);
+        // window.localStorage.setItem(ARTIST_NAME, artistName);
         
         //create actions to set artist name and is artist into state
         dispatch(setToken(token));
@@ -65,12 +64,12 @@ export const FanSignup = ({email, password, userName, artist, bio, imgUrl}) => a
 
 
 // ARTIST SIGNUP ============================================================================
-export const ArtistSignup = ({email, password, userName, artist, artistName, bio, genre, imgUrl}) => async (dispatch) => {
+export const ArtistSignup = ({email, password, userName, artist, artistName, bio, genre}) => async (dispatch) => {
 
-    const body = {email, password, userName, artist, artistName, bio, genre, imgUrl}
+    const body = {email, password, userName, artist, artistName, bio, genre}
 
     try{
-        const response = await fetch(`${baseUrl}/artists`, {
+        const response = await fetch(`${baseUrl}/users`, {
             method: "POST",
             headers: { "Content-type": "application/json" },
             body: JSON.stringify(body)
@@ -80,15 +79,15 @@ export const ArtistSignup = ({email, password, userName, artist, artistName, bio
             throw response;
         }
     
-        const { token, user: { id, userName, artistName, artist } } = await response.json();
+        const { token, user: { id, userName, artist } } = await response.json();
         
         console.log('sign up successful!!!!');
 
         window.localStorage.setItem(TOKEN_KEY, token);
         window.localStorage.setItem(USER_ID, id);
         window.localStorage.setItem(USER_NAME, userName);
-        window.localStorage.setItem(ARTIST_NAME, artistName);
         window.localStorage.setItem(IS_ARTIST, artist);
+        // window.localStorage.setItem(ARTIST_NAME, artistName);
         
         dispatch(setToken(token));
 
@@ -112,13 +111,12 @@ export const login = ({email, password}) => async (dispatch) => {
             throw response;
         }
 
-        const { token, user: { id, userName, artistName, artist } } = await response.json();
+        const { token, user: { id, userName, artist } } = await response.json();
         
         console.log("USER!", artist);
         window.localStorage.setItem(TOKEN_KEY, token);
         window.localStorage.setItem(USER_ID, id);
         window.localStorage.setItem(USER_NAME, userName);
-        window.localStorage.setItem(ARTIST_NAME, artistName);
         window.localStorage.setItem(IS_ARTIST, artist);
 
         dispatch(setToken(token));
@@ -141,6 +139,9 @@ export const logout = () => async (dispatch, getState) => {
 
     if(response.ok) {
         window.localStorage.removeItem(TOKEN_KEY);
+        window.localStorage.removeItem(USER_ID);
+        window.localStorage.removeItem(USER_NAME);
+        window.localStorage.removeItem(IS_ARTIST);
         dispatch(removeToken());
     }
 }

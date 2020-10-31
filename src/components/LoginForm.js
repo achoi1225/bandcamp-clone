@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../store/actions/authentication";
-import { setToken } from "../store/actions/authentication";
+// import { setToken } from "../store/actions/authentication";
 
 const LoginForm = ({ hideLoginForm }) => {
     const [email, setEmail] = useState("");
@@ -30,6 +30,7 @@ const LoginForm = ({ hideLoginForm }) => {
 
         hideLoginForm();
         dispatch(login(payload));
+        //need to dispatch action to GET user data!
     }
 
     return (

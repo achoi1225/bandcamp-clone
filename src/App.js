@@ -8,25 +8,30 @@ import Nav from './components/Nav';
 import AlbumPage from './components/AlbumPage';
 import LoginPage from './components/LoginPage';
 import { loadToken } from './store/actions/authentication';
+import { USER_ID } from './store/actions/authentication';
+import { getUser } from "./store/actions/user";
 
 const App = () => {
   const needLogin = useSelector((state) => !state.authentication.token);
-
+  // const userData = useSelector((state) => state.user.data);
+  const userId = localStorage.getItem(USER_ID);
   // set artist of fan through role
   // const isArtist = 
 
-  console.log("LOGIN NEEDED? ", needLogin);
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
-
+  
+  // console.log("USER ID", userId);
   useEffect(() => {
     setLoaded(true);
     dispatch(loadToken());
+    dispatch(getUser(userId));
   }, []);
-
+  
   if(!loaded) {
     return null;
   }
+  // console.log("USER DATA", userData);
 
   return (
     <>
