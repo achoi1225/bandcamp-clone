@@ -7,17 +7,22 @@ import Nav from './components/Nav';
 // import ArtistSignupPage from './components/ArtistSignupPage';
 import AlbumPage from './components/AlbumPage';
 import LoginPage from './components/LoginPage';
+import FanEditPage from './components/FanEditPage';
 import { loadToken } from './store/actions/authentication';
 import { USER_ID } from './store/actions/authentication';
+import { USER_NAME } from './store/actions/authentication';
 import { getUser } from "./store/actions/user";
+import { getFollowing } from './store/actions/follows';
 
 const App = () => {
   const needLogin = useSelector((state) => !state.authentication.token);
+  const followsList = useSelector((state) => state.follows.list)
   // const userData = useSelector((state) => state.user.data);
   const userId = localStorage.getItem(USER_ID);
+  const userName = localStorage.getItem(USER_NAME);
   // set artist of fan through role
-  // const isArtist = 
 
+  console.log("USERNAME!!!!", userName);
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
   
@@ -25,13 +30,25 @@ const App = () => {
   useEffect(() => {
     setLoaded(true);
     dispatch(loadToken());
-    dispatch(getUser(userId));
+    // dispatch(getUser(userId));
   }, []);
   
+  useEffect(() => {
+    console.log("DISPATCHING GET USER!!!")
+    dispatch(getUser(userId));
+}, [userId]);
+
+  useEffect(() => {
+    console.log("DISPATCHING GET FOLLOWING!!!")
+    dispatch(getFollowing(userId));
+}, [userId]);
+ 
+
+
   if(!loaded) {
     return null;
   }
-  // console.log("USER DATA", userData);
+  console.log("IN APP!!!", followsList);
 
   return (
     <>
@@ -44,7 +61,12 @@ const App = () => {
             needLogin={needLogin}
             component={AlbumPage}
           />
-
+          <PrivateRoute 
+            path={`/${userName}`}
+            exact={true}
+            needLogin={needLogin}
+            component={FanEditPage}
+          />
         </Switch>
       </BrowserRouter>
       {/* <LoginPage /> */}

@@ -7,6 +7,7 @@ import uiLoginForm from './reducers/ui-login-form';
 import albums from './reducers/albums';
 import album from './reducers/album';
 import user from './reducers/user';
+import follows from './reducers/follows';
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -18,7 +19,8 @@ const reducer = combineReducers({
     uiLoginForm,
     albums,
     album,
-    user
+    user,
+    follows
 });
 
 const configureStore = (initialState) => {

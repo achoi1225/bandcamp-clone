@@ -5,35 +5,68 @@ import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import '../css/album-page.css';
 import Nav from './Nav';
+import FollowBtn from './sub-components/album-page/FollowBtn';
 import { USER_ID } from '../store/actions/authentication';
-import {getOneAlbum, setCurrent} from '../store/actions/album';
+import { getOneAlbum } from '../store/actions/album';
+import { follow, getFollowing } from '../store/actions/follows';
 
-const AlbumPage = (props) => {
+const AlbumPage = () => {
     const [currentTrack, setCurrentTrack] = useState('');
-    // const userData = useSelector((state) => state.user.data);
+    // const [isFollowingArtist, setIsFollowingArtist] = useState(false);
+
     const current = useSelector((state) => state.album.current);
+    const followsList = useSelector((state) => state.follows.list);
     const userId = localStorage.getItem(USER_ID);
 
     const dispatch = useDispatch();
     const { id } = useParams();
     const albumId = Number.parseInt(id);
 
-    // console.log("INSIDE ALBUM PAGE", userData);
     useEffect(() => {
         dispatch(getOneAlbum(albumId));
+        // dispatch(getFollowing(userId));
         // (async () => dispatch(getOneAlbum(albumId)))();
     }, [albumId])
     
-    // console.log("CURRENT!!!!", current);
+    // useEffect(() => {
+    //     dispatch(getFollowing(userId));
+    //     // for(const property in followsList) {
+    //     //     // console.log("FOLLOWING ID ",followsList[property].followingId);
+    //     //     // console.log("ARTIST ID ", artist.id);
+    //     //     console.log("HERE!!!")
+    //     //     if(followsList[property].followingId === artist.id) {
+    //     //         // setIsFollowingArtist(true);
+    //     //         console.log("TRUE!!!");
+    //     //         break;
+    //     //     }
+    //     // }
+    // }, [userId]);
+    
+    
     
     if(!current) {
         return null;
     }
-    
+
+    console.log("FOLLOWSLIST!!", followsList);
     const album = current.album;
     const tracks = current.album.Tracks;
     const artist = current.album.User;
-    const trackTest = tracks[0].trackUrl;
+
+    // for(const property in followsList) {
+    //     // console.log("FOLLOWING ID ",followsList[property].followingId);
+    //     // console.log("ARTIST ID ", artist.id);
+    //     if(followsList[property].followingId === artist.id) {
+    //         // setIsFollowingArtist(true);
+    //         console.log("TRUE!!!");
+    //         break;
+    //     }
+    // }
+
+    const handleFollow = (e) => {
+        console.log('button test!!!', e.target.value);
+        dispatch(follow(artist.id));
+    }
 
     return (
         <>
@@ -94,7 +127,19 @@ const AlbumPage = (props) => {
                                 {artist.artistName}
                             </div>
 
-                            <button className="follow-btn">Follow</button>
+                            <FollowBtn followsList={followsList} handleFollow={handleFollow} artistId={artist.id} />
+                            {/* { isFollowingArtist ? (
+                                <button className="follow-btn">
+                                    <span>Following <i className="fa fa-check-circle-o" aria-hidden="true"></i></span>
+                                </button>
+                                ) : (
+                                    <button onClick={handleFollow} className="follow-btn">
+                                    <span>Follow</span>
+                                    </button>
+                                )
+                            } */}
+                            
+                
 
                             <div className="bio">
                                 {artist.bio}

@@ -137,6 +137,9 @@
     background-color: #52B4B4;
     color: white;
     outline: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .album-page__right-content .bio{
