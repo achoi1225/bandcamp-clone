@@ -7,7 +7,8 @@ import Nav from './components/Nav';
 // import ArtistSignupPage from './components/ArtistSignupPage';
 import AlbumPage from './components/AlbumPage';
 import LoginPage from './components/LoginPage';
-import FanEditPage from './components/FanEditPage';
+// import FanEditPage from './components/FanEditPage';
+import FanEditPageContainer from './components/FanEditPageContainer';
 import { loadToken } from './store/actions/authentication';
 import { USER_ID } from './store/actions/authentication';
 import { USER_NAME } from './store/actions/authentication';
@@ -16,39 +17,38 @@ import { getFollowing } from './store/actions/follows';
 
 const App = () => {
   const needLogin = useSelector((state) => !state.authentication.token);
-  const followsList = useSelector((state) => state.follows.list)
-  // const userData = useSelector((state) => state.user.data);
+  // const followsList = useSelector((state) => state.follows.list)
+  // const user = useSelector((state) => state.user.data);
   const userId = localStorage.getItem(USER_ID);
   const userName = localStorage.getItem(USER_NAME);
-  // set artist of fan through role
-
-  console.log("USERNAME!!!!", userName);
+  
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
   
   // console.log("USER ID", userId);
-  useEffect(() => {
-    setLoaded(true);
-    dispatch(loadToken());
-    // dispatch(getUser(userId));
-  }, []);
+  useEffect(() => {   
+        (async () => {
+          await dispatch(loadToken());
+          setLoaded(true);
+        })();
+  },[]);
   
-  useEffect(() => {
-    console.log("DISPATCHING GET USER!!!")
-    dispatch(getUser(userId));
-}, [userId]);
+//   useEffect(() => {
+//     console.log("DISPATCHING GET USER!!!")
+//     dispatch(getUser(userId));
+// }, [userId]);
 
-  useEffect(() => {
-    console.log("DISPATCHING GET FOLLOWING!!!")
-    dispatch(getFollowing(userId));
-}, [userId]);
+//   useEffect(() => {
+//     console.log("DISPATCHING GET FOLLOWING!!!")
+//     dispatch(getFollowing(userId));
+// }, [userId]);
  
 
 
   if(!loaded) {
     return null;
   }
-  console.log("IN APP!!!", followsList);
+  console.log("IN APP!!!");
 
   return (
     <>
@@ -65,7 +65,7 @@ const App = () => {
             path={`/${userName}`}
             exact={true}
             needLogin={needLogin}
-            component={FanEditPage}
+            component={FanEditPageContainer}
           />
         </Switch>
       </BrowserRouter>

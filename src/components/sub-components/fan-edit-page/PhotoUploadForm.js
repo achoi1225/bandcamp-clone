@@ -1,22 +1,20 @@
-import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import React from "react";
 import '../../../css/upload-form.css';
 // import { setToken } from "../store/actions/authentication";
 
-const PhotoUploadForm = ({setIsUploadFormVisible, handleSubmit, setImage}) => {
+const PhotoUploadForm = ({setIsUploadPhotoFormVisible, handlePhotoSubmit, setImage}) => {
 
-    const updateRole = (e) =>  {
-        e.preventDefault();
-        console.log(`USER CHOSE ${e.target.value} AS ROLE!!!!`);
-        // setRole(e.target.value);
-        // showFanSignupForm();
-        // hideRoleForm();
-    }
+    // const updateRole = (e) =>  {
+    //     e.preventDefault();
+    //     console.log(`USER CHOSE ${e.target.value} AS ROLE!!!!`);
+    //     // setRole(e.target.value);
+    //     // showFanSignupForm();
+    //     // hideRoleForm();
+    // }
 
     const handleClose = (e) => {
         console.log('close');
-        setIsUploadFormVisible(false);
+        setIsUploadPhotoFormVisible(false);
     }
 
     return (
@@ -27,7 +25,7 @@ const PhotoUploadForm = ({setIsUploadFormVisible, handleSubmit, setImage}) => {
                     <span onClick={handleClose} className="close-btn">x</span>
                 </div>
 
-                <form onSubmit={handleSubmit} className="upload-form">
+                <form onSubmit={handlePhotoSubmit} className="upload-form">
                     <input
                         type="file"
                         placeholder="Upload an image"
