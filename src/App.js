@@ -5,7 +5,7 @@ import { ProtectedRoute, PrivateRoute } from "./util/route-util";
 import Nav from './components/Nav';
 // import ArtistPage from './components/ArtistPage';
 // import ArtistSignupPage from './components/ArtistSignupPage';
-import AlbumPage from './components/AlbumPage';
+import AlbumPageContainer from './components/AlbumPageContainer';
 import LoginPage from './components/LoginPage';
 // import FanEditPage from './components/FanEditPage';
 import FanEditPageContainer from './components/FanEditPageContainer';
@@ -59,7 +59,7 @@ const App = () => {
             path="/albums/:id"
             exact={true}
             needLogin={needLogin}
-            component={AlbumPage}
+            component={AlbumPageContainer}
           />
           <PrivateRoute 
             path={`/${userName}`}

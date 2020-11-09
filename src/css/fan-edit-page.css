@@ -95,10 +95,12 @@
 .bio-edit-btn {
     border: 1px solid lightgray;
     border-radius: 3px;
+    /* border: none; */
     outline: none;
     margin-left: 20px;
-    padding: 2px 5px;
+    padding: 1px 5px;
     font-weight: bold;
+    color: gray;
     background-color: transparent;
     cursor: pointer;
 

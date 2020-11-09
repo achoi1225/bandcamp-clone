@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink, Route, useParams } from 'react-router-dom';
-import Nav from './Nav';
-import Photo from './sub-components/fan-edit-page/Photo';
-import PhotoUploadForm from './sub-components/fan-edit-page/PhotoUploadForm';
 import { uploadPhoto, deletePhoto, getUser, editBio } from '../store/actions/user'; 
 import {USER_ID} from '../store/actions/authentication';
-import { getFollowing } from '../store/actions/follows';
+import { getFollowing, deleteFollow } from '../store/actions/follows';
 import FanEditPage from './FanEditPage';
 
 const FanEditPageContainer = () => {
@@ -17,10 +13,7 @@ const FanEditPageContainer = () => {
     const follows = useSelector((state) => state.follows.list);
 
     useEffect(() => {
-        // (async () => await dispatch(getFollowing(userId)))();
-        // (async () => await dispatch(getUser(userId)))();
-
-        dispatch(getFollowing(userId));
+        dispatch(getFollowing());
         dispatch(getUser(userId));
     }, [userId]);
     
@@ -38,6 +31,7 @@ const FanEditPageContainer = () => {
             uploadPhoto={(data) => dispatch(uploadPhoto(data))}
             deletePhoto={() => dispatch(deletePhoto())}
             editBio={(data) => dispatch(editBio(data))}
+            deleteFollow={(id) => dispatch(deleteFollow(id))}
         />
     );
 }

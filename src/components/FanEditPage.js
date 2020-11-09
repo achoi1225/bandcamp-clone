@@ -19,7 +19,9 @@ const FanEditPage = ({
     currentBio, 
     uploadPhoto, 
     deletePhoto,
-    editBio }) => {
+    editBio,
+    deleteFollow }) => {
+
     console.log("IN FAN EDIT PAGE!!!");
 
     const userId = localStorage.getItem(USER_ID);
@@ -31,11 +33,14 @@ const FanEditPage = ({
     const [bio, setBio] = useState(currentBio);
     
 
+    // HANDLE UPLOAD PHOTO BUTTON
     const handleUploadPhotoBtn = (e) => {
         console.log("upload button clicked!");
         setIsUploadPhotoFormVisible(true);
     }
 
+
+    // HANDLE DELETE PHOTO BUTTON
     const handleDeletePhotoBtn = (e) => {
         console.log("delete button clicked!");
         (async () => {
@@ -44,6 +49,8 @@ const FanEditPage = ({
         })();
     }
     
+
+    // HANDLE PHOTO SUBMIT BUTTON
     const handlePhotoSubmit = (e) => {
         e.preventDefault();
         const data = new FormData();
@@ -57,24 +64,47 @@ const FanEditPage = ({
         })();
     }
 
+
+    // HANDLE BIO EDIT BUTTON
     const handleBioEditBtn = (e) => {
         setIsBioEditFormVisible(true);
     }
     
+
+    // UPDATE ON CHANGE
     const updateProperty = (callback) => (e) => {
         callback(e.target.value);
         console.log("BIO", bio);
     };
 
+
+    // HANDLE BIO SUBMIT
     const handleBioSubmitBtn = (e) => {
         e.preventDefault();
-
-        const data = { bio }
-        editBio(data)
-    }
+        const data = { bio };
     
+        (async () => {
+            const newBio = await editBio(data);
+            setBio(newBio);
+        })()
+
+        setIsBioEditFormVisible(false);
+    }
+
+    const handleFollowDeleteBtn = (e) => {
+        console.log("value!!", e.target.value);
+
+        const id = e.target.value;
+        (async () => {
+            await deleteFollow(id);
+        })()
+    }
+
+
+
     console.log("USER!!!!", user);
 
+    // RENDER
     if(!user) {
         console.log("NOT LOADED YET")
         return null;
@@ -87,7 +117,7 @@ const FanEditPage = ({
     let total = 0;
     
     for(const property in follows) {
-        followingList.push(follows[property].User);
+        followingList.push([follows[property].User, follows[property].id]);
         total++;
     }
 
@@ -122,8 +152,10 @@ const FanEditPage = ({
                             {   isBioEditFormVisible ? 
                                     (<BioEditForm  
                                         updateProperty={updateProperty} 
+                                        bio={bio}
                                         setBio={setBio}  
                                         handleBioSubmitBtn={handleBioSubmitBtn}
+                                        setIsBioEditFormVisible={setIsBioEditFormVisible}
                                     />) : 
                                     (<Bio bio={bio}/>)
                             }
@@ -138,15 +170,15 @@ const FanEditPage = ({
                     <div className="follows-holder">
 
                         {followingList.map((follow) => (
-                            <div key={follow.id} className="follow-holder">
+                            <div key={follow[1]} className="follow-holder">
 
-                                <img className="artist-photo" src={follow.imgUrl}/>
+                                <img className="artist-photo" src={follow[0].imgUrl}/>
 
                                 <div className="artist-name-btn-holder">
                                     <div className="artist-name">
-                                        {follow.userName}
+                                        {follow[0].userName}
                                     </div>
-                                    <button className="unfollow-btn">unfollow</button>
+                                    <button value={follow[1]} onClick={handleFollowDeleteBtn} className="unfollow-btn">unfollow</button>
                                 </div>
 
                             </div>
