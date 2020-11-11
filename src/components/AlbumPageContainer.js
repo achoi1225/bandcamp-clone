@@ -20,8 +20,8 @@ const AlbumPageContainer = () => {
 
     useEffect(() => {
         dispatch(getFollowing());
-        dispatch(getUser(userId));
-    }, [userId]);
+        // dispatch(getUser());
+    }, []);
 
     useEffect(() => {
         dispatch(getOneAlbum(albumId));

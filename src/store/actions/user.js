@@ -11,12 +11,16 @@ export const loadUser = (data) => ({
 
 
 // GET USER DATA
-export const getUser = (id) => async (dispatch, getState) => {
+export const getUser = () => async (dispatch, getState) => {
     console.log("IN GET USER!!!")
     const {
         authentication: { token },
     } = getState();
 
+    const id = localStorage.getItem(USER_ID);
+
+    console.log("ID!! ", id);
+    
     try{
         const response = await fetch(`${baseUrl}/users/${id}`,
             {
@@ -66,7 +70,7 @@ export const uploadPhoto = (data) => async (dispatch, getState) => {
         }
 
         const { updatedUser } = await response.json();
-        dispatch(getUser(updatedUser));
+        dispatch(getUser());
         return updatedUser.imgUrl;
 
     } catch(err) {
@@ -109,7 +113,7 @@ export const deletePhoto = () => async (dispatch, getState) => {
         }
 
         const { updatedUser } = await response.json();
-        dispatch(getUser(updatedUser));
+        dispatch(getUser());
         return updatedUser.imgUrl;
 
     } catch(err) {

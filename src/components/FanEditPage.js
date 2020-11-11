@@ -101,9 +101,6 @@ const FanEditPage = ({
     }
 
 
-
-    console.log("USER!!!!", user);
-
     // RENDER
     if(!user) {
         console.log("NOT LOADED YET")

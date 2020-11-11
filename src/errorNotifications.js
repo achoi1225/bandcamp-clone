@@ -1,27 +1,39 @@
-export const errorNotifications = async (error) => {
-    if (error.status >= 400 && error.status < 600) {
-      const errorJSON = await error.json();
-      console.log(errorJSON)
+const errorNotifications = async (err) => {
+  if(err.status >= 400 && err.status < 600) {
+      const errorJSON = await err.json();
+
+      console.log("ERRORJSON!!!", errorJSON);
+
       const errorsContainer = document.querySelector(".errors-container");
+
       let errorsHtml = [
-        `
-          <div class="alert alert-danger">
+          `<li>
               Something went wrong. Please try again.
-          </div>
-        `,
+          </li>`,
       ];
+
       const { errors } = errorJSON;
-      if (errors && Array.isArray(errors)) {
-        errorsHtml = errors.map(
-          (message) => `
-            <div class="alert alert-danger">
-                ${message}
-            </div>
-          `
-        );
+
+      if(errors && Array.isArray(errors)) {
+          errorsHtml = errors.map(
+              (message) => {
+                  console.log("MESSAGE!!!", message);
+                  return (`
+                      <li>
+                          ${ message }
+                      </li>
+                  `)
+              }
+          )
       }
       errorsContainer.innerHTML = errorsHtml.join("");
-    } else {
-      throw error;
-    }
-  };
+
+  } else {
+      alert(
+          "Something went wrong. Please check your internet connection and try again!"
+      );
+
+  }
+};
+
+export default errorNotifications;

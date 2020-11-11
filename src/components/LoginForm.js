@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../store/actions/authentication";
+import { getUser} from "../store/actions/user";
 // import { setToken } from "../store/actions/authentication";
 
 const LoginForm = ({ hideLoginForm }) => {
@@ -29,7 +30,12 @@ const LoginForm = ({ hideLoginForm }) => {
         }
 
         hideLoginForm();
-        dispatch(login(payload));
+        (async () => {
+            await dispatch(login(payload));
+            // history.push("/");
+        })();
+
+        // dispatch(getUser());
         //need to dispatch action to GET user data!
     }
 

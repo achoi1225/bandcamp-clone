@@ -1,5 +1,8 @@
 import { baseUrl } from '../../config';
 // import { errorNotifications } from "../error-notifications.js";
+// import FanSignupForm from "../../components/FanSignupForm";
+import { hideFanSignupForm } from "./ui-fan-signup-form";
+import errorNotificatiions from "../../errorNotifications";
 
 export const TOKEN_KEY = "songcamp/authentication/TOKEN";
 export const USER_ID = "songcamp/authentication/USER_ID";
@@ -26,7 +29,7 @@ export const loadToken = () => async (dispatch) => {
 
 
 // FAN SIGNUP ============================================================================
-export const FanSignup = ({email, password, userName, artist, bio, imgUrl}) => async (dispatch) => {
+export const fanSignup = ({email, password, userName, artist, bio, imgUrl}) => async (dispatch) => {
 
     const body = {email, password, userName, artist, bio, imgUrl};
 
@@ -49,27 +52,26 @@ export const FanSignup = ({email, password, userName, artist, bio, imgUrl}) => a
         window.localStorage.setItem(TOKEN_KEY, token);
         window.localStorage.setItem(USER_ID, id);
         window.localStorage.setItem(USER_NAME, userName);
-        window.localStorage.setItem(IS_ARTIST, artist);
-        // window.localStorage.setItem(ARTIST_NAME, artistName);
         
         //create actions to set artist name and is artist into state
         dispatch(setToken(token));
 
+        return token;
+
     } catch(err) {
-        console.error(err);
-        // errorNotifications(err);
+        errorNotificatiions(err);
     }
 }
 
 
 
 // ARTIST SIGNUP ============================================================================
-export const ArtistSignup = ({email, password, userName, artist, artistName, bio, genre}) => async (dispatch) => {
+export const artistSignup = ({email, password, userName, artist, artistName, genre}) => async (dispatch) => {
 
-    const body = {email, password, userName, artist, artistName, bio, genre}
+    const body = {email, password, userName, artist, artistName, genre}
 
     try{
-        const response = await fetch(`${baseUrl}/users`, {
+        const response = await fetch(`${baseUrl}/artists`, {
             method: "POST",
             headers: { "Content-type": "application/json" },
             body: JSON.stringify(body)
@@ -79,21 +81,18 @@ export const ArtistSignup = ({email, password, userName, artist, artistName, bio
             throw response;
         }
     
-        const { token, user: { id, userName, artist } } = await response.json();
+        const { token, user: { id, userName, } } = await response.json();
         
         console.log('sign up successful!!!!');
 
         window.localStorage.setItem(TOKEN_KEY, token);
         window.localStorage.setItem(USER_ID, id);
         window.localStorage.setItem(USER_NAME, userName);
-        window.localStorage.setItem(IS_ARTIST, artist);
-        // window.localStorage.setItem(ARTIST_NAME, artistName);
         
         dispatch(setToken(token));
 
     } catch(err) {
-        console.error(err);
-        // errorNotifications(err);
+        errorNotificatiions(err);
     }
 }
 

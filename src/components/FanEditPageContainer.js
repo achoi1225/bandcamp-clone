@@ -6,7 +6,7 @@ import { getFollowing, deleteFollow } from '../store/actions/follows';
 import FanEditPage from './FanEditPage';
 
 const FanEditPageContainer = () => {
-    const userId = localStorage.getItem(USER_ID);
+    // const userId = localStorage.getItem(USER_ID);
     const dispatch = useDispatch();
     
     const user = useSelector((state) => state.user.data);
@@ -14,8 +14,8 @@ const FanEditPageContainer = () => {
 
     useEffect(() => {
         dispatch(getFollowing());
-        dispatch(getUser(userId));
-    }, [userId]);
+        // dispatch(getUser());
+    }, []);
     
     if(!user || !follows) {
         return null;

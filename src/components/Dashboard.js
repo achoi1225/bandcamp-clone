@@ -1,10 +1,12 @@
 import React from 'react';
 
-const Dashboard = () => {
+const Dashboard = ({ user, artistPhotoExists, setArtistPhotoExists }) => {
 
-    const artistPhotoExists = false;
-    const artistImgUrl = 'https://i.imgur.com/ZpkMNwZ.jpg';
-    const artistName = "The Pojos";
+    // const artistPhotoExists = false;
+    setArtistPhotoExists(!!user.imgUrl)
+    console.log("artist photo exists? ", artistPhotoExists)
+    const artistImgUrl = user.imgUrl;
+    const artistName = user.artistName;
 
     return (
         <div className="artist-page__holder">

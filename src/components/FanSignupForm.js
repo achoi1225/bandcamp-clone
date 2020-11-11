@@ -1,20 +1,22 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { FanSignup } from "../store/actions/authentication";
+
+import '../css/modal-forms.css';
+import { fanSignup } from "../store/actions/authentication";
 // import { setToken } from "../store/actions/authentication";
 
 const FanSignupForm = ({ hideFanSignupForm }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [userName, setUserName] = useState("");
+    const artist = false;
     const bio= ''; 
     const imgUrl= '';
     // const [formVisible, setFormVisible] = useState("");
     const dispatch = useDispatch();
  
     // for testing
-    const artist = false;
 
     const updateProperty = (property) => (e) => {
         console.log(e.target.value)
@@ -38,17 +40,26 @@ const FanSignupForm = ({ hideFanSignupForm }) => {
             imgUrl
         }
 
-        hideFanSignupForm();
-        dispatch(FanSignup(payload));
+        const token = dispatch(fanSignup(payload));
+        if(token) {
+            hideFanSignupForm();
+        }
+        
+        // (async () => {
+        //     const successMessage = dispatch(FanSignup(payload));
+        //     if(successMessage) {
+        //     }
+        // })();
     }
 
     return (
-        <div className="signup-form-holder">
-            <div className="signup-form-content">
-                <div className="signup-form-header-container">
-                    <h3 className="signup-form-header">Sign up for a Songcamp fan account</h3> <span onClick={handleClose} className="signup-form-close-btn">x</span>
+        <div className="form-holder">
+            <div className="form-content">
+                <div className="form-header-container">
+                    <h3 className="form-header">Sign up for a Songcamp fan account</h3> <span onClick={handleClose} className="form-close-btn">x</span>
                 </div>
-                <form className="signup-form">
+                <form className="form">
+                    <ul className="errors-container"></ul>
                     <label>Email address</label>
                     <input name="email" placeholder={email} value={email} onChange={updateProperty(setEmail)}/>
                     <label>Password</label>
